@@ -1,25 +1,41 @@
-import logo from './logo.svg';
-import './App.css';
+import React, { Component } from "react";
+import "./App.css";
+import { BrowserRouter, Route, Link } from "react-router-dom";
+import Home from "./pages/Home";
+import AddCategory from "./pages/AddCategory";
+import "bootstrap/dist/css/bootstrap.min.css";
+import axios from "./axios-orders";
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+class App extends Component {
+  state = {
+    storedData: [],
+  };
+  componentDidMount() {
+    axios.get("/categories.json").then((response) => {
+      const arr = Object.entries(response.data);
+      this.setState({ storedData: arr });
+    });
+  }
+
+  render() {
+    console.log("thissss", this.state.storedData);
+    return (
+      <BrowserRouter>
+        <div className="App">
+          <Link to="/">Нүүр</Link>
+          <Link
+            to={{
+              pathname: "/addcategory",
+              query: { storedData: this.state.storedData },
+            }}
+          >
+            Categ
+          </Link>
+          <Route path="/" exact component={Home}></Route>
+          <Route path="/addcategory" component={AddCategory}></Route>
+        </div>
+      </BrowserRouter>
+    );
+  }
 }
-
 export default App;

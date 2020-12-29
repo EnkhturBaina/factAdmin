@@ -1,0 +1,12 @@
+.add-category-container {
+  display: block;
+}
+.add-category-content {
+  display: grid;
+  width: 20%;
+  align-items: center;
+  margin: 0 auto;
+}
+.add-button {
+  width: 50px;
+}
